@@ -3,9 +3,9 @@
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
                 <img style="width:50px" class="me-2 avatar-sm rounded-circle"
-                     src="https://api.dicebear.com/6.x/fun-emoji/svg?seed=Mario" alt="Mario Avatar">
+                     src="https://api.dicebear.com/6.x/fun-emoji/svg?seed={{$idea->user->name}}" alt="Mario Avatar">
                 <div>
-                    <h5 class="card-title mb-0"><a href="#"> Mario
+                    <h5 class="card-title mb-0"><a href="#"> {{$idea->user->name}}
                         </a></h5>
                 </div>
             </div>
@@ -13,9 +13,11 @@
                 <form method="POST" action="{{route('ideas.destroy', $idea->id)}}">
                     @csrf
                     @method('delete')
-                    <a class="mx-1" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
                     <a href="{{route('ideas.show', $idea->id)}}">View</a>
-                <button class="ms-1 btn btn-danger btn-sm">x</button>
+                    @if(auth()->id() === $idea->user_id)
+                    <a class="mx-1" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
+                    <button class="ms-1 btn btn-danger btn-sm">x</button>
+                    @endif
                 </form>
             </div>
         </div>
@@ -32,13 +34,13 @@
                     @enderror
                 </div>
                 <div class="">
-                    <button class="btn btn-dark mb-2 btn-sm"> Update </button>
+                    <button class="btn btn-dark mb-2 btn-sm"> Update</button>
                 </div>
             </form>
         @else
-        <p class="fs-6 fw-light text-muted">
-            {{$idea->content}}
-        </p>
+            <p class="fs-6 fw-light text-muted">
+                {{$idea->content}}
+            </p>
         @endif
         <div class="d-flex justify-content-between">
             <div>
@@ -50,6 +52,6 @@
                                         {{$idea->created_at}} </span>
             </div>
         </div>
-            @include('shared.comments-box')
+        @include('shared.comments-box')
     </div>
 </div>

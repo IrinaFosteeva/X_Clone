@@ -12,6 +12,8 @@ class IdeaController extends Controller
         $validated = request()->validate([
             'content' => 'required|min:1|max:240' // !!! textarea name="idea"
         ]);
+        $validated['user_id'] = auth()->id();
+
 //                $idea = new Idea([
 //            'content' => request()->get('idea', ''),
 //        ]);
@@ -42,6 +44,9 @@ class IdeaController extends Controller
     }
 
     public function edit(Idea $idea) {
+        if(auth()->id() !== $idea->user_id) {
+            abort(404);
+        }
         $editing = true;
 
         return view('ideas.show', compact('idea', 'editing'));
