@@ -20,6 +20,6 @@ class CommentController extends Controller {
         $comment->save();
 
 
-        return redirect()->route('ideas.show', $idea->id)->with('success', 'Comment posted successfully');
+        return redirect()->route('ideas.show', $idea->id)->with('success1', 'Comment posted successfully');
     }
 }
