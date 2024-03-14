@@ -23,7 +23,7 @@
                     </h6>
                     <div class="d-flex align-items-start">
                     <small class="fs-6 mt-1 me-3 fw-light text-muted">{{$comment->created_at->diffForHumans()}}</small>
-                    <form method="POST" action="{{route('ideas.comments.destroy', $comment->id)}}">
+                    <form method="POST" action="{{route('ideas.comments.destroy', [$idea->id, $comment->id])}}">
                         @csrf
                         @method('delete')
                         @if(auth()->id() === $comment->user->id)

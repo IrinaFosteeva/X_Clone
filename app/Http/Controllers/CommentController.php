@@ -23,7 +23,7 @@ class CommentController extends Controller {
         return redirect()->route('ideas.show', $idea->id)->with('success1', 'Comment posted successfully');
     }
 
-    public function destroy(Comment $comment) {
+    public function destroy(Idea $idea, Comment $comment) {
         if(auth()->id() !== $comment->user_id) {
             return back()->with('error', 'You are not authorized to delete this comment.');
         }
