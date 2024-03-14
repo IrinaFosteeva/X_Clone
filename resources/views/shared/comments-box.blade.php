@@ -21,7 +21,15 @@
                 <div class="d-flex justify-content-between">
                     <h6 class="">{{$comment->user->name}}
                     </h6>
-                    <small class="fs-6 fw-light text-muted">{{$comment->created_at}}</small>
+                    <div class="d-flex align-items-start">
+                    <small class="fs-6 mt-1 me-3 fw-light text-muted">{{$comment->created_at->diffForHumans()}}</small>
+                    <form method="POST" action="{{route('ideas.comments.destroy', $comment->id)}}">
+                        @csrf
+                        @method('delete')
+                        @if(auth()->id() === $comment->user->id)
+                            <button class="ms-1 btn btn-dark btn-sm">x</button>
+                        @endif
+                    </form></div>
                 </div>
                 <p class="fs-6 mt-3 fw-light">
                     {{$comment->content}}

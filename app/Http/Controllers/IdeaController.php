@@ -27,9 +27,10 @@ class IdeaController extends Controller
     }
 
     public function destroy(Idea $idea) {
-        //Idea::where('id', $id)->firstOrFail()->delete();
+        if(auth()->id() !== $idea->user_id) {
+            return back()->with('error', 'You are not authorized to delete this comment.');
+        }
         $idea->delete();
-
         return redirect()->route('dashboard')->with('success1', 'Idea deleted successfully!');
 
     }
@@ -38,7 +39,7 @@ class IdeaController extends Controller
 
 //        return view('ideas.show', [
 //            'idea' => $idea
-//        ]);
+//        ]); OR
 
         return view('ideas.show', compact('idea'));
     }

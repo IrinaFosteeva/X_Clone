@@ -11,7 +11,6 @@ class CommentController extends Controller {
 //        $validated = request()->validate([
 //            'content' => 'required|min:1|max:240' // !!! textarea name="content"
 //        ]);
-
         //dd(request()->get('content'));
 
         $comment = new Comment();
@@ -22,5 +21,18 @@ class CommentController extends Controller {
 
 
         return redirect()->route('ideas.show', $idea->id)->with('success1', 'Comment posted successfully');
+    }
+
+    public function destroy(Comment $comment) {
+        if(auth()->id() !== $comment->user_id) {
+            return back()->with('error', 'You are not authorized to delete this comment.');
+        }
+//        $comment = new Comment();
+//        $comment::where('id', $comment_id)->firstOrFail()->delete(); OR
+        //Comment::destroy($comment_id); OR
+        $comment->delete();
+
+        //$comment_id->delete();
+        return redirect()->route('dashboard')->with('success1', 'Comment deleted successfully!');
     }
 }
