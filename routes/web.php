@@ -39,7 +39,7 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/terms', function () {
     return view('terms');
-});
+})->name('terms');
 
 Route::get('/profile', [ProfileController::class, 'index']);
 
