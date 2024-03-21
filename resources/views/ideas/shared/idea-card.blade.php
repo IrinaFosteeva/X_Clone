@@ -1,3 +1,6 @@
+{{--{{dd($idea->user)}}--}}
+
+
 <div class="card">
     <div class="px-3 pt-4 pb-2">
         <div class="d-flex align-items-center justify-content-between">
@@ -5,7 +8,8 @@
                 <img style="width:50px" class="me-2 avatar-sm rounded-circle"
                      src="{{$idea->user->getImageURL()}}" alt={{$idea->user->name}}>
                 <div>
-                    <h5 class="card-title mb-0"><a href="{{route('users.show', $idea->user->id)}}"> {{$idea->user->name}}
+                    <h5 class="card-title mb-0"><a
+                            href="{{route('users.show', $idea->user->id)}}"> {{$idea->user->name}}
                         </a></h5>
                 </div>
             </div>
@@ -15,8 +19,8 @@
                     @method('delete')
                     <a href="{{route('ideas.show', $idea->id)}}">View</a>
                     @if(auth()->id() === $idea->user_id)
-                    <a class="mx-1" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
-                    <button class="ms-1 btn btn-danger btn-sm">x</button>
+                        <a class="mx-1" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
+                        <button class="ms-1 btn btn-danger btn-sm">x</button>
                     @endif
                 </form>
             </div>
@@ -43,10 +47,7 @@
             </p>
         @endif
         <div class="d-flex justify-content-between">
-            <div>
-                <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-heart me-1">
-                                        </span> {{$idea->likes}} </a>
-            </div>
+            @include('ideas.shared.like-button')
             <div>
                                     <span class="fs-6 fw-light text-muted"> <span class="fas fa-clock"> </span>
                                         {{$idea->created_at}} </span>

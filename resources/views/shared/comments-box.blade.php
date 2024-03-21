@@ -10,7 +10,10 @@
             <button type="submit" class="btn btn-primary btn-sm"> Post Comment</button>
         </div>
     </form>
-    <hr>
+
+    @if($idea->comments)
+        <hr>
+    @endif
     @foreach($idea->comments as $comment)
 
         <div class="d-flex align-items-start">
