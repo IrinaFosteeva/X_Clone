@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\IdeaLikeController;
+use App\Http\Controllers\FeedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,8 @@ Route::resource('ideas', IdeaController::class)->only(['show']);
 Route::resource('ideas.comments', CommentController::class)->only(['store', 'destroy'])->middleware('auth');
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/feed', FeedController::class)->middleware('auth')->name('feed');
 
 
 Route::get('/terms', function () {
