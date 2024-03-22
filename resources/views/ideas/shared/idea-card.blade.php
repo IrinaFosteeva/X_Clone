@@ -18,10 +18,10 @@
                     @csrf
                     @method('delete')
                     <a href="{{route('ideas.show', $idea->id)}}">View</a>
-                    @if(auth()->id() === $idea->user_id)
+                    @can('edit-idea', $idea)
                         <a class="mx-1" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
                         <button class="ms-1 btn btn-danger btn-sm">x</button>
-                    @endif
+                    @endcan
                 </form>
             </div>
         </div>

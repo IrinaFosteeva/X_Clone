@@ -27,9 +27,7 @@ class IdeaController extends Controller
     }
 
     public function destroy(Idea $idea) {
-        if(auth()->id() !== $idea->user_id) {
-            return back()->with('error', 'You are not authorized to delete this comment.');
-        }
+        $this->authorize('idea.edit', $idea);
         $idea->delete();
         return redirect()->route('dashboard')->with('success1', 'Idea deleted successfully!');
 
@@ -45,15 +43,14 @@ class IdeaController extends Controller
     }
 
     public function edit(Idea $idea) {
-        if(auth()->id() !== $idea->user_id) {
-            abort(404);
-        }
+        $this->authorize('idea.edit', $idea);
         $editing = true;
 
         return view('ideas.show', compact('idea', 'editing'));
     }
 
     public function update(Idea $idea) {
+        $this->authorize('idea.edit', $idea);
         $validated = request()->validate([
             'content' => 'required|min:1|max:240' // !!! textarea name="idea"
         ]);

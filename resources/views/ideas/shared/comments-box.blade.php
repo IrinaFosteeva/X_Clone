@@ -28,9 +28,9 @@
                     <form method="POST" action="{{route('ideas.comments.destroy', [$idea->id, $comment->id])}}">
                         @csrf
                         @method('delete')
-                        @if(auth()->id() === $comment->user->id)
+                        @can('edit-comment', $comment)
                             <button class="ms-1 btn btn-dark btn-sm">x</button>
-                        @endif
+                        @endcan
                     </form></div>
                 </div>
                 <p class="fs-6 mt-3 fw-light">
