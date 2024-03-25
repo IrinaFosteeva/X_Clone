@@ -1,8 +1,6 @@
 <div>
     <form action="{{route('ideas.comments.store', $idea->id)}}" method="POST">
         @csrf
-
-
         <div class="mb-3">
             <textarea name="content" class="fs-6 form-control" rows="1"></textarea>
         </div>
@@ -24,14 +22,16 @@
                     <h6 class="">{{$comment->user->name}}
                     </h6>
                     <div class="d-flex align-items-start">
-                    <small class="fs-6 mt-1 me-3 fw-light text-muted">{{$comment->created_at->diffForHumans()}}</small>
-                    <form method="POST" action="{{route('ideas.comments.destroy', [$idea->id, $comment->id])}}">
-                        @csrf
-                        @method('delete')
-                        @can('edit-comment', $comment)
-                            <button class="ms-1 btn btn-dark btn-sm">x</button>
-                        @endcan
-                    </form></div>
+                        <small
+                            class="fs-6 mt-1 me-3 fw-light text-muted">{{$comment->created_at->diffForHumans()}}</small>
+                        <form method="POST" action="{{route('ideas.comments.destroy', [$idea->id, $comment->id])}}">
+                            @csrf
+                            @method('delete')
+                            @can('delete', $comment)
+                                <button class="ms-1 btn btn-dark btn-sm">x</button>
+                            @endcan
+                        </form>
+                    </div>
                 </div>
                 <p class="fs-6 mt-3 fw-light">
                     {{$comment->content}}

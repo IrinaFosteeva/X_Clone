@@ -24,6 +24,7 @@ class CommentController extends Controller {
     }
 
     public function destroy(Idea $idea, Comment $comment) {
+        $this->authorize('delete', $comment);
         if(auth()->id() !== $comment->user_id) {
             return back()->with('error', 'You are not authorized to delete this comment.');
         }

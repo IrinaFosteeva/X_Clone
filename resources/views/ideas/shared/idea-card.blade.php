@@ -18,7 +18,7 @@
                     @csrf
                     @method('delete')
                     <a href="{{route('ideas.show', $idea->id)}}">View</a>
-                    @can('edit-idea', $idea)
+                    @can('update', $idea)
                         <a class="mx-1" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
                         <button class="ms-1 btn btn-danger btn-sm">x</button>
                     @endcan
