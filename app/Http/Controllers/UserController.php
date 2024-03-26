@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +20,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('update');
+        $this->authorize('update', $user);
         $ideas = $user->ideas()->paginate(4);
         $editing = true;
         return view('users.edit', compact('user', 'editing', 'ideas'));
@@ -28,17 +29,12 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $this->authorize('update');
-        $validated = request()->validate([
-            'name' => 'required|min:1|max:240',
-            'bio' => 'nullable|min:1|max:255',
-            'image' => 'image',
-        ]);
+        $validated = $request->validated();
 
-        if(request()->has('image')){
-            $image_path = request()->file('image')->store('profile', 'public');
+        if($request->has('image')){
+            $image_path = $request->file('image')->store('profile', 'public');
             $validated['image'] =$image_path;
                 Storage::disk('public')->delete($user->image ?? '');
         }

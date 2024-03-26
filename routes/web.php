@@ -47,7 +47,7 @@ Route::get('/terms', function () {
 
 Route::get('/profile', [ProfileController::class, 'index']);
 
-Route::resource('users', UserController::class)->only( 'show', 'update');
+Route::resource('users', UserController::class)->only( 'show');
 Route::resource('users', UserController::class)->only( 'edit', 'update')->middleware('auth');
 Route::get('profile', [UserController::class, 'profile'])->middleware('auth')->name('profile');
 
