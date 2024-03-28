@@ -45,7 +45,11 @@ Route::get('/terms', function () {
     return view('terms');
 })->name('terms');
 
-Route::get('/profile', [ProfileController::class, 'index']);
+Route::get('/lang/{lang}', function ($lang) {
+    app()->setLocale($lang);
+    session()->put('locale', $lang);
+    return redirect()->route('dashboard');
+})->name('lang');
 
 Route::resource('users', UserController::class)->only( 'show');
 Route::resource('users', UserController::class)->only( 'edit', 'update')->middleware('auth');
